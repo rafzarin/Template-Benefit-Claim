@@ -6,12 +6,12 @@ from io import BytesIO
 # Function to filter data based on ClaimStatus
 def filter_data(df):
     st.write("Filtering data where 'ClaimStatus' is 'R'...")
-    if 'ClaimStatus' not in df.columns:
+    if 'Status_Claim' not in df.columns:
         st.error("The column 'ClaimStatus' is missing from the uploaded file.")
         return pd.DataFrame()
 
-    st.write(df['ClaimStatus'].value_counts())
-    df = df[df['ClaimStatus'] == 'R']
+    st.write(df['Status_Claim'].value_counts())
+    df = df[df['Status_Claim'] == 'R']
     return df
 
 # Main processing function
