@@ -23,27 +23,12 @@ def move_to_template(df):
         return pd.DataFrame()
 
     # Step 2: Convert date columns to datetime
-    date_columns = ["TreatmentStart", "TreatmentFinish", "Date", "PaymentDate"]
+    date_columns = ["TreatmentStart", "TreatmentFinish", "PaymentDate"]
     for col in date_columns:
         if col in new_df.columns:
             new_df[col] = pd.to_datetime(new_df[col], errors='coerce')
             if new_df[col].isnull().any():
                 st.warning(f"Invalid date values detected in column '{col}'. Coerced to NaT.")
-
-    # Step 3: Transform to the new template
-    required_columns = [
-        "ClientName", "PolicyNo", "ClaimNo", "MemberNo", "Membership", "PatientName",
-        "EmpID", "EmpName", "ClaimType", "ProductType", "RoomOption",
-        "TreatmentRoomClass", "TreatmentPlace", "TreatmentStart", "TreatmentFinish",
-        "PrimaryDiagnosis", "PaymentDate", "Billed", "Accepted",
-        "ExcessCoy", "ExcessEmp", "ExcessTotal", "Unpaid"
-    ]
-
-    # Check for missing columns
-    missing_columns = [col for col in required_columns if col not in new_df.columns]
-    if missing_columns:
-        st.error(f"The following required columns are missing: {', '.join(missing_columns)}")
-        return pd.DataFrame()
 
     # Create transformed DataFrame
     df_transformed = pd.DataFrame({
